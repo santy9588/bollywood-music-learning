@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════
+   Bollywood Music Learning — Design Tokens
+   Palette: Deep crimson + warm gold + ivory base
+   Typography: Playfair Display (display) + Outfit (body)
+   ═══════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay-VariableFont_wght.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/assets/fonts/Outfit-VariableFont_wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* ── Ivory/Cream Base ── */
+    --background: 0.974 0.006 85;
+    --foreground: 0.18 0.04 35;
+
+    /* ── Cards: warm white ── */
+    --card: 0.99 0.003 80;
+    --card-foreground: 0.18 0.04 35;
+
+    /* ── Popover ── */
+    --popover: 0.99 0.003 80;
+    --popover-foreground: 0.18 0.04 35;
+
+    /* ── Primary: Deep Crimson ── */
+    --primary: 0.42 0.19 18;
+    --primary-foreground: 0.97 0.01 85;
+
+    /* ── Secondary: Warm Gold ── */
+    --secondary: 0.82 0.12 75;
+    --secondary-foreground: 0.18 0.04 35;
+
+    /* ── Muted ── */
+    --muted: 0.93 0.015 70;
+    --muted-foreground: 0.52 0.04 45;
+
+    /* ── Accent: Saffron ── */
+    --accent: 0.76 0.16 55;
+    --accent-foreground: 0.12 0.04 35;
+
+    /* ── Destructive ── */
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.97 0.01 85;
+
+    /* ── Borders & Inputs ── */
+    --border: 0.88 0.02 70;
+    --input: 0.88 0.02 70;
+    --ring: 0.55 0.18 18;
+
+    /* ── Charts ── */
+    --chart-1: 0.42 0.19 18;
+    --chart-2: 0.76 0.16 55;
+    --chart-3: 0.55 0.22 25;
+    --chart-4: 0.82 0.12 75;
+    --chart-5: 0.65 0.14 200;
+
+    /* ── Sidebar ── */
+    --sidebar: 0.20 0.04 30;
+    --sidebar-foreground: 0.93 0.015 75;
+    --sidebar-primary: 0.76 0.16 55;
+    --sidebar-primary-foreground: 0.12 0.04 30;
+    --sidebar-accent: 0.30 0.05 30;
+    --sidebar-accent-foreground: 0.93 0.015 75;
+    --sidebar-border: 0.30 0.04 30;
+    --sidebar-ring: 0.55 0.18 18;
+
+    /* ── Custom Brand Tokens ── */
+    --gold: 0.82 0.14 75;
+    --gold-dark: 0.68 0.14 68;
+    --crimson: 0.42 0.19 18;
+    --crimson-light: 0.58 0.16 20;
+    --saffron: 0.78 0.16 55;
+    --ivory: 0.974 0.006 85;
+    --deep-brown: 0.18 0.04 35;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+/* ── Decorative ── */
+.bollywood-gradient {
+  background: linear-gradient(135deg,
+    oklch(0.42 0.19 18) 0%,
+    oklch(0.35 0.16 28) 40%,
+    oklch(0.22 0.08 40) 100%
+  );
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg,
+    oklch(0.82 0.14 75) 0%,
+    oklch(0.72 0.16 62) 50%,
+    oklch(0.64 0.15 52) 100%
+  );
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg,
+    oklch(0.14 0.04 30) 0%,
+    oklch(0.25 0.08 25) 30%,
+    oklch(0.32 0.12 22) 60%,
+    oklch(0.20 0.05 35) 100%
+  );
+}
+
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px oklch(0.42 0.19 18 / 0.18);
+}
+
+.text-gold {
+  color: oklch(var(--gold));
+}
+
+.text-crimson {
+  color: oklch(var(--crimson));
+}
+
+.text-saffron {
+  color: oklch(var(--saffron));
+}
+
+.bg-crimson {
+  background-color: oklch(var(--crimson));
+}
+
+.bg-gold {
+  background-color: oklch(var(--gold));
+}
+
+.bg-saffron {
+  background-color: oklch(var(--saffron));
+}
+
+/* ── Ornamental divider ── */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(var(--gold)), transparent);
+}
+
+/* ── Shimmer animation for loading states ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    oklch(var(--muted)) 25%,
+    oklch(var(--border)) 50%,
+    oklch(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Gold price badge ── */
+.gold-badge {
+  background: linear-gradient(135deg,
+    oklch(0.82 0.14 75) 0%,
+    oklch(0.72 0.16 62) 60%,
+    oklch(0.64 0.15 52) 100%
+  );
+  color: oklch(0.22 0.05 40);
+  font-weight: 700;
+}
+
+/* ── Hero card glassmorphism ── */
+.hero-card-glass {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── Dashboard stat chip ── */
+.stat-chip {
+  background: linear-gradient(135deg,
+    oklch(0.32 0.06 25 / 0.6) 0%,
+    oklch(0.25 0.05 30 / 0.6) 100%
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.12);
+}
+
+/* ── Dashboard welcome banner ── */
+.dashboard-banner {
+  background:
+    linear-gradient(135deg,
+      oklch(0.18 0.06 20) 0%,
+      oklch(0.28 0.10 22) 40%,
+      oklch(0.22 0.08 30) 70%,
+      oklch(0.16 0.04 35) 100%
+    );
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-banner::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -5%;
+  width: 50%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at center,
+    oklch(0.78 0.16 55 / 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(var(--muted-foreground));
+}
