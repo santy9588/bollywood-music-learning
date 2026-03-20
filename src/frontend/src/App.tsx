@@ -8,21 +8,15 @@ import {
 } from "@tanstack/react-router";
 import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
-import { AdminPage } from "./pages/AdminPage";
-import { CourseDetailPage } from "./pages/CourseDetailPage";
-import { CoursePlayerPage } from "./pages/CoursePlayerPage";
-import { CoursesPage } from "./pages/CoursesPage";
-import { DashboardPage } from "./pages/DashboardPage";
-import { LandingPage } from "./pages/LandingPage";
-import { PaymentCancelPage } from "./pages/PaymentCancelPage";
-import { PaymentGatewayPage } from "./pages/PaymentGatewayPage";
-import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
-import { ProfilePage } from "./pages/ProfilePage";
+import { HomePage } from "./pages/HomePage";
+import { NewTripPage } from "./pages/NewTripPage";
+import { TripDetailPage } from "./pages/TripDetailPage";
+import { TripHistoryPage } from "./pages/TripHistoryPage";
 
-// ─── Root Layout ─────────────────────────────────────────────────
+// Root layout
 const rootRoute = createRootRoute({
   component: () => (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       <main className="flex-1">
         <Outlet />
@@ -33,89 +27,35 @@ const rootRoute = createRootRoute({
   ),
 });
 
-// ─── Routes ──────────────────────────────────────────────────────
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: LandingPage,
+  component: HomePage,
 });
 
-const coursesRoute = createRoute({
+const newTripRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/courses",
-  component: CoursesPage,
+  path: "/new-trip",
+  component: NewTripPage,
 });
 
-const courseDetailRoute = createRoute({
+const historyRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/courses/$id",
-  component: CourseDetailPage,
+  path: "/history",
+  component: TripHistoryPage,
 });
 
-const dashboardRoute = createRoute({
+const tripDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/dashboard",
-  component: DashboardPage,
+  path: "/trip/$id",
+  component: TripDetailPage,
 });
 
-const learnRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/learn/$courseId",
-  component: CoursePlayerPage,
-});
-
-const adminRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/admin",
-  component: AdminPage,
-});
-
-const profileRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/profile",
-  component: ProfilePage,
-});
-
-const paymentSuccessRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/payment-success",
-  component: PaymentSuccessPage,
-  validateSearch: (search: Record<string, unknown>) => ({
-    session_id:
-      typeof search.session_id === "string" ? search.session_id : undefined,
-    course_id:
-      typeof search.course_id === "string" ? search.course_id : undefined,
-  }),
-});
-
-const paymentCancelRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/payment-cancel",
-  component: PaymentCancelPage,
-});
-
-const paymentGatewayRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/payment-gateway",
-  component: PaymentGatewayPage,
-  validateSearch: (search: Record<string, unknown>) => ({
-    method: typeof search.method === "string" ? search.method : "phonepe",
-    courseId: typeof search.courseId === "string" ? search.courseId : "",
-  }),
-});
-
-// ─── Router ──────────────────────────────────────────────────────
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  coursesRoute,
-  courseDetailRoute,
-  dashboardRoute,
-  learnRoute,
-  adminRoute,
-  profileRoute,
-  paymentSuccessRoute,
-  paymentCancelRoute,
-  paymentGatewayRoute,
+  newTripRoute,
+  historyRoute,
+  tripDetailRoute,
 ]);
 
 const router = createRouter({

@@ -1,199 +1,94 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Link, useLocation } from "@tanstack/react-router";
-import { LogOut, Menu, Music2, User, X } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Clock, MapPin, Menu, Navigation, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { useInternetIdentity } from "../hooks/useInternetIdentity";
-import { useIsCallerAdmin } from "../hooks/useQueries";
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const { identity, login, clear, isLoggingIn, isInitializing } =
-    useInternetIdentity();
-  const location = useLocation();
-  const { data: isAdmin } = useIsCallerAdmin();
-  const isAuthenticated = !!identity;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const state = useRouterState();
+  const path = state.location.pathname;
 
-  const navLinks = [
-    { to: "/courses", label: "Courses", ocid: "nav.courses_link" },
-    ...(isAuthenticated
-      ? [{ to: "/dashboard", label: "Dashboard", ocid: "nav.dashboard_link" }]
-      : []),
-    ...(isAdmin
-      ? [{ to: "/admin", label: "Admin", ocid: "nav.admin_link" }]
-      : []),
+  const links = [
+    { to: "/" as const, label: "Dashboard", icon: Navigation },
+    { to: "/new-trip" as const, label: "New Trip", icon: MapPin },
+    { to: "/history" as const, label: "History", icon: Clock },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
-
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 backdrop-blur-md bg-background/90">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-full bg-crimson flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <Music2 className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-display font-bold text-sm text-foreground">
-                Bollywood
-              </span>
-              <span className="font-body text-xs text-saffron font-semibold tracking-wider uppercase">
-                Music Learning
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                data-ocid={link.ocid}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive(link.to)
-                    ? "bg-primary/10 text-crimson"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Desktop Auth */}
-          <div className="hidden md:flex items-center gap-3">
-            {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-2 h-9 px-3"
-                    data-ocid="nav.profile_link"
-                  >
-                    <Avatar className="w-7 h-7">
-                      <AvatarFallback className="bg-crimson text-white text-xs font-bold">
-                        {identity
-                          .getPrincipal()
-                          .toString()
-                          .slice(0, 2)
-                          .toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm font-medium">Account</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile" className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      Profile
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => clear()}
-                    className="text-destructive flex items-center gap-2"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button
-                onClick={() => login()}
-                disabled={isLoggingIn || isInitializing}
-                size="sm"
-                className="bg-crimson hover:bg-crimson/90 text-white border-0 shadow-sm"
-                data-ocid="nav.login_button"
-              >
-                {isLoggingIn ? "Signing in…" : "Sign In"}
-              </Button>
-            )}
+    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+      <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="flex items-center gap-2 group"
+          data-ocid="nav.link"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+            <Navigation className="w-4 h-4 text-primary" />
           </div>
+          <span className="font-display font-bold text-xl text-foreground tracking-tight">
+            Route<span className="text-primary">Trail</span>
+          </span>
+        </Link>
 
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-1">
+          {links.map(({ to, label, icon: Icon }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                path === to
+                  ? "bg-primary/15 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+              }`}
+              data-ocid="nav.link"
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </Link>
+          ))}
         </div>
-      </div>
 
-      {/* Mobile Menu */}
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+          data-ocid="nav.toggle"
+        >
+          {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
       <AnimatePresence>
-        {isOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-border/60 bg-background"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden border-t border-border bg-background"
           >
-            <div className="container px-4 py-4 flex flex-col gap-2">
-              {navLinks.map((link) => (
+            <div className="px-4 py-3 flex flex-col gap-1">
+              {links.map(({ to, label, icon: Icon }) => (
                 <Link
-                  key={link.to}
-                  to={link.to}
-                  data-ocid={link.ocid}
-                  onClick={() => setIsOpen(false)}
-                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive(link.to)
-                      ? "bg-primary/10 text-crimson"
-                      : "hover:bg-muted text-foreground"
+                  key={to}
+                  to={to}
+                  onClick={() => setMenuOpen(false)}
+                  className={`flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-medium transition-all ${
+                    path === to
+                      ? "bg-primary/15 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
+                  data-ocid="nav.link"
                 >
-                  {link.label}
+                  <Icon className="w-4 h-4" />
+                  {label}
                 </Link>
               ))}
-              <div className="pt-2 border-t border-border/60">
-                {isAuthenticated ? (
-                  <div className="flex flex-col gap-2">
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsOpen(false)}
-                      className="px-4 py-2.5 rounded-lg text-sm hover:bg-muted"
-                      data-ocid="nav.profile_link"
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        clear();
-                        setIsOpen(false);
-                      }}
-                      className="px-4 py-2.5 rounded-lg text-sm text-destructive hover:bg-muted text-left"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      login();
-                      setIsOpen(false);
-                    }}
-                    disabled={isLoggingIn || isInitializing}
-                    className="w-full bg-crimson hover:bg-crimson/90 text-white"
-                    data-ocid="nav.login_button"
-                  >
-                    Sign In
-                  </Button>
-                )}
-              </div>
             </div>
           </motion.div>
         )}

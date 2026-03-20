@@ -1,35 +1,35 @@
-# Bollywood Music Learning
+# RouteTrail
 
 ## Current State
-
-The platform has a fully functional Bollywood music course marketplace with:
-- Course catalog, detail pages, course player, student dashboard, admin panel
-- Stripe-only payment integration via `createCoursePaymentSession` backend call
-- Authorization via Internet Identity
-- Single "Enroll Now" button on CourseDetailPage that redirects to Stripe Checkout
+New project — no existing application files.
 
 ## Requested Changes (Diff)
 
 ### Add
-- `PaymentMethodSelector` component: a modal/sheet that displays all supported payment gateways as selectable tiles before checkout
-- Payment gateway options: PhonePe, Paytm, Google Pay, PayPal, Stripe, Credit/Debit Card
-- `PaymentGatewayPage` (`/payment-gateway`): a dedicated page shown after selecting a UPI method (PhonePe, Paytm) with instructions and a QR code placeholder, course ID in query params
-- Payment method icons/logos for each gateway (generated images or SVG inline)
-- "Secure payment" trust badge section beneath the payment selector
+- Map view using Google Maps (Leaflet.js as fallback) showing current position and route
+- Start/End journey recording with timestamps
+- Live GPS route tracking storing coordinates
+- Distance calculation between start and current/end point
+- Checkpoint system: user can drop named waypoints during a trip
+- Trip history: list of all saved journeys with date, distance, duration
+- Trip detail view: map replay of route, all checkpoints, start/end info
+- Return navigation: from current position back to trip's starting point
+- Vehicle type selector (car, bike, truck, walk)
+- Trip notes/checklist per journey
+- Backend storage for all trips and checkpoints
+- Authorization so each user sees their own trips
 
 ### Modify
-- `CourseDetailPage`: replace the direct Stripe redirect on "Enroll Now" click with opening the `PaymentMethodSelector` modal/sheet
-- The Stripe, Credit/Debit Card, and Google Pay/PayPal options in the selector trigger the existing Stripe checkout flow (Stripe supports all of these natively)
-- PhonePe and Paytm options navigate to `/payment-gateway?method=phonepe&courseId=...` or `/payment-gateway?method=paytm&courseId=...`
+N/A
 
 ### Remove
-- Nothing removed from backend
+N/A
 
 ## Implementation Plan
-
-1. Generate payment gateway logo images (PhonePe, Paytm, Google Pay, PayPal, Stripe, Card)
-2. Create `PaymentMethodSelector` component with a Dialog containing gateway tiles
-3. Update `CourseDetailPage` to open the selector dialog instead of directly calling Stripe
-4. Create `PaymentGatewayPage` for UPI-based methods with QR instructions
-5. Add `/payment-gateway` route to `App.tsx`
-6. Validate and deploy
+1. Backend: Trip actor with create/update/end trip, add checkpoint, get trips, get trip by ID
+2. Authorization component for user identity
+3. Frontend: Home screen with map + Start Journey button
+4. Active trip screen: live position, route polyline, Add Checkpoint, End Trip
+5. Trip history screen: list of past journeys
+6. Trip detail screen: map replay, checklist, return navigation link
+7. Vehicle type + notes fields on trip creation

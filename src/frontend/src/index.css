@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* RouteTrail Dark Map Aesthetic — Slate + Teal */
+    --background: 0.13 0.018 262;
+    --foreground: 0.96 0.008 260;
+
+    --card: 0.19 0.02 262;
+    --card-foreground: 0.96 0.008 260;
+
+    --popover: 0.19 0.02 262;
+    --popover-foreground: 0.96 0.008 260;
+
+    /* Teal primary */
+    --primary: 0.82 0.15 185;
+    --primary-foreground: 0.13 0.018 262;
+
+    --secondary: 0.26 0.025 262;
+    --secondary-foreground: 0.96 0.008 260;
+
+    --muted: 0.26 0.025 262;
+    --muted-foreground: 0.6 0.018 260;
+
+    --accent: 0.72 0.18 185;
+    --accent-foreground: 0.13 0.018 262;
+
+    --destructive: 0.62 0.22 25;
+    --destructive-foreground: 0.96 0.008 260;
+
+    --border: 0.28 0.025 262;
+    --input: 0.28 0.025 262;
+    --ring: 0.82 0.15 185;
+
+    --radius: 0.5rem;
+
+    --chart-1: 0.82 0.15 185;
+    --chart-2: 0.72 0.18 210;
+    --chart-3: 0.75 0.2 160;
+    --chart-4: 0.65 0.18 130;
+    --chart-5: 0.7 0.2 220;
+
+    --sidebar: 0.16 0.02 262;
+    --sidebar-foreground: 0.96 0.008 260;
+    --sidebar-primary: 0.82 0.15 185;
+    --sidebar-primary-foreground: 0.13 0.018 262;
+    --sidebar-accent: 0.26 0.025 262;
+    --sidebar-accent-foreground: 0.96 0.008 260;
+    --sidebar-border: 0.28 0.025 262;
+    --sidebar-ring: 0.82 0.15 185;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Leaflet dark map overrides */
+.leaflet-container {
+  background: oklch(0.13 0.018 262);
+  font-family: inherit;
+}
+
+.leaflet-control-attribution {
+  background: oklch(0.19 0.02 262 / 0.85) !important;
+  color: oklch(0.6 0.018 260) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: oklch(0.82 0.15 185) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: oklch(0.19 0.02 262) !important;
+  color: oklch(0.96 0.008 260) !important;
+  border: 1px solid oklch(0.28 0.025 262) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px oklch(0 0 0 / 0.4) !important;
+}
+
+.leaflet-popup-tip {
+  background: oklch(0.19 0.02 262) !important;
+}
+
+.leaflet-bar {
+  border: 1px solid oklch(0.28 0.025 262) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.leaflet-bar a {
+  background: oklch(0.19 0.02 262) !important;
+  color: oklch(0.82 0.15 185) !important;
+  border-bottom: 1px solid oklch(0.28 0.025 262) !important;
+}
+
+.leaflet-bar a:hover {
+  background: oklch(0.26 0.025 262) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.19 0.02 262);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.025 262);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.82 0.15 185);
+}
